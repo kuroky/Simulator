@@ -66,9 +66,9 @@ class Device {
     }
 
     return devices.filter {
-      return $0.hasContent && $0.isAvailable && $0.os != .unknown
-    }.sorted {
-      return $0.osInfo.compare($1.osInfo) == .orderedAscending
+        return $0.hasContent && $0.isAvailable && $0.name.lowercased().range(of: "iphone") != nil
+        }.sorted {
+            return $0.osInfo.compare($1.osInfo) == .orderedAscending
     }
   }
 }
