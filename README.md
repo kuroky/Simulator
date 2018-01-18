@@ -2,7 +2,7 @@
 
 ![](Screenshots/simulator.png)
 
-![](Screenshots/simulator_iPhone)
+![](Screenshots/simulator_iPhone.png)
 
 ## Export
 
