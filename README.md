@@ -8,6 +8,7 @@
 
 - Go to `Product -> Archive`
 - Choose `Export -> Export as a Mac Application`
+- Refresh `Cmd + R` when you build or delete App
 
 ## Author
 
