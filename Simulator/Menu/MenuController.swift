@@ -2,13 +2,13 @@ import Cocoa
 
 class MenuController: NSObject, NSMenuDelegate {
     
-    let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+    let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     var devices: [Device] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        statusItem.image = NSImage(named: "icon")
+        statusItem.image = NSImage(named: NSImage.Name(rawValue: "icon"))
         statusItem.menu = makeMenu()
     }
     
@@ -55,12 +55,12 @@ class MenuController: NSObject, NSMenuDelegate {
     }
     
     // MARK: - Action
-    func refresh(_ item: NSMenuItem) {
+    @objc func refresh(_ item: NSMenuItem) {
         statusItem.menu = makeMenu()
     }
     
-    func quit(_ item: NSMenuItem) {
-        NSApplication.shared().terminate(self)
+    @objc func quit(_ item: NSMenuItem) {
+        NSApplication.shared.terminate(self)
     }
     
     // MARK: - NSMenuDelegate

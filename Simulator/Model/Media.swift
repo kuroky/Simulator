@@ -20,8 +20,8 @@ class Media: NSObject {
     }
   }
 
-  func handleMenuItem(_ item: NSMenuItem) {
+  @objc func handleMenuItem(_ item: NSMenuItem) {
     guard let location = location else { return }
-    NSWorkspace.shared().open(location)
+    NSWorkspace.shared.open(location)
   }
 }
