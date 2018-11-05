@@ -28,8 +28,8 @@ struct Menu {
     item.title = device.name
     item.isEnabled = device.isAvailable
     item.state = NSControl.StateValue(rawValue: device.isOpen ? 1 : 0)
-    item.onStateImage = NSImage(named: NSImage.Name(rawValue: "on"))
-    item.offStateImage = NSImage(named: NSImage.Name(rawValue: "off"))
+    item.onStateImage = NSImage(named: "on")
+    item.offStateImage = NSImage(named: "off")
 
     let menu = NSMenu()
     menu.autoenablesItems = false
