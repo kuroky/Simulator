@@ -55,8 +55,14 @@ class MenuController: NSObject, NSMenuDelegate {
     }
     
     // MARK: - Action
-    @objc func refresh(_ item: NSMenuItem) {
-        statusItem.menu = makeMenu()
+    @objc func refresh(_ item: NSMenuItem) { 
+        
+        DispatchQueue.global().async {
+            let menu = self.makeMenu()
+            DispatchQueue.main.async {
+                self.statusItem.menu = menu
+            }
+        }
     }
     
     @objc func quit(_ item: NSMenuItem) {
