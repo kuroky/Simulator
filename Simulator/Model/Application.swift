@@ -14,14 +14,21 @@ class Application: NSObject {
 
   static func load(_ path: URL) -> [Application] {
     let directory = path.appendingPathComponent("data/Containers/Bundle/Application")
-    return File.directories(directory)
-    .map {
-      let application = Application()
-      application.path = path
-      application.loadInfo(directory.appendingPathComponent($0))
-
-      return application
+    
+    let apps = File.directories(directory)
+        .map { app -> Application in
+            let application = Application()
+            application.path = path
+            application.loadInfo(directory.appendingPathComponent(app))
+            
+            return application
     }
+    
+    return apps.sorted{ (s1, s2) -> Bool in
+        return s1.name.uppercased() < s2.name.uppercased()
+    }
+    
+    //return apps
   }
 
   // Can also use xcrun simctl get_app_container
