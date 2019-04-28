@@ -48,7 +48,7 @@ class Device {
                              directoryPath: Path.devices)
 
     guard let data = string.data(using: String.Encoding.utf8),
-      let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) as? JSONDictionary,
+      let jsonObject = ((try? JSONSerialization.jsonObject(with: data, options: []) as? JSONDictionary) as JSONDictionary??),
       let json = jsonObject
       else { return [] }
 
