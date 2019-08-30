@@ -17,12 +17,15 @@ class Device {
   init(osInfo: String, json: JSONDictionary) {
     self.name = json.string("name")
     self.udid = json.string("udid")
-    self.isAvailable = json.string("availability").contains("(available)")
+    self.isAvailable = json.boolValue("isAvailable")
     self.isOpen = json.string("state").contains("Booted")
     self.osInfo = osInfo
     self.applications = Application.load(location)
     self.appGroups = AppGroup.load(location)
     self.media = Media.load(location)
+    if self.name.lowercased().contains("iphone") {
+        print(json)
+    }
   }
 
   var location: URL {
@@ -56,19 +59,30 @@ class Device {
   }
 
   fileprivate static func parse(_ json: JSONDictionary) -> [Device] {
+    guard let jsonDic = json["devices"] as? JSONDictionary else {
+        return []
+    }
+    
     var devices: [Device] = []
-    (json["devices"] as? JSONDictionary)?.forEach { (key, value) in
-      (value as? JSONArray)?.forEach { deviceJSON in
-        let device = Device(osInfo: key.remove("com.apple.CoreSimulator.SimRuntime."),
-                            json: deviceJSON)
-        devices.append(device)
-      }
-    }
-
-    return devices.filter {
-        return $0.hasContent && $0.isAvailable && $0.name.lowercased().range(of: "iphone") != nil
-        }.sorted {
-            return $0.osInfo.compare($1.osInfo) == .orderedAscending
-    }
+    jsonDic.forEach({ (key, value) in
+        (value as? JSONArray)?.forEach({ deviceJson in
+            let device = Device(osInfo: key.remove("com.apple.CoreSimulator.SimRuntime."),
+                                json: deviceJson)
+            devices.append(device)
+        })
+    })
+    
+    let iphones = devices.filter({ device -> Bool in
+        if device.hasContent && device.isAvailable && device.name.lowercased().range(of: "iphone") != nil {
+            return true
+        }
+        return false
+    })
+    
+    let sorteds = iphones.sorted(by: { (device1, device2) -> Bool in
+        return device1.osInfo.compare(device2.osInfo) == .orderedAscending
+    })
+    
+    return sorteds;
   }
 }
