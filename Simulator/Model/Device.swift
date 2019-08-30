@@ -23,9 +23,6 @@ class Device {
     self.applications = Application.load(location)
     self.appGroups = AppGroup.load(location)
     self.media = Media.load(location)
-    if self.name.lowercased().contains("iphone") {
-        print(json)
-    }
   }
 
   var location: URL {

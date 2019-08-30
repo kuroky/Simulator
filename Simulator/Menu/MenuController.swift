@@ -8,7 +8,7 @@ class MenuController: NSObject, NSMenuDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        statusItem.image = NSImage(named: "icon")
+        statusItem.button?.image = NSImage(named: "icon")
         statusItem.menu = makeMenu()
     }
     
