@@ -54,12 +54,15 @@ class Device {
 
     return parse(json)
   }
-
+    
+    ///获取所有设备
+    /// - Parameter json: 设备json
   fileprivate static func parse(_ json: JSONDictionary) -> [Device] {
     guard let jsonDic = json["devices"] as? JSONDictionary else {
         return []
     }
     
+    /// 初始化设备对象
     var devices: [Device] = []
     jsonDic.forEach({ (key, value) in
         (value as? JSONArray)?.forEach({ deviceJson in
@@ -69,6 +72,7 @@ class Device {
         })
     })
     
+    /// 找出iOS设备
     let iphones = devices.filter({ device -> Bool in
         if device.hasContent && device.isAvailable && device.name.lowercased().range(of: "iphone") != nil {
             return true
@@ -76,6 +80,7 @@ class Device {
         return false
     })
     
+    /// 设备按字母排序
     let sorteds = iphones.sorted(by: { (device1, device2) -> Bool in
         return device1.osInfo.compare(device2.osInfo) == .orderedAscending
     })
